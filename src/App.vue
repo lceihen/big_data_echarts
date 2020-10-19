@@ -1,10 +1,8 @@
 <template>
-  <div></div>
+  <div class="page">456345</div>
 </template>
 
 <script>
-//import HelloWorld from "./components/HelloWorld.vue";
-
 export default {
   name: "App",
   components: {},
@@ -12,9 +10,8 @@ export default {
 </script>
 
 <style scoped>
-div {
-  background-color: skyblue;
-  width: 1.25rem;
-  height: 1.25rem;
+.page {
+  width: 100%;
+  height: 100%;
 }
 </style>
