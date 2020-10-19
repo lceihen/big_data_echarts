@@ -11,5 +11,10 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+div {
+  background-color: skyblue;
+  width: 1.25rem;
+  height: 1.25rem;
+}
 </style>
