@@ -12,6 +12,7 @@
     "core-js": "^3.6.5",
     "jquery": "^3.5.1",
     "lib-flexible": "^0.3.2",
+    "postcss-px2rem-exclude": "0.0.6",
     "vue": "^3.0.0"
   },
   "devDependencies": {
