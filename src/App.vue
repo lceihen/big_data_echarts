@@ -30,18 +30,28 @@ export default {
   width: 100%;
   display: flex;
   /* height: 7.5rem; */
+
+  flex: 1;
 }
 .classleftpage {
-  flex: 1;
-
-  background: skyblue;
+  width: 2.5rem;
+  margin-left: 0.05rem;
+  margin-right: 0.05rem;
+  box-sizing: border-box;
 }
 .classcenterpage {
-  flex: 2;
-  background: thistle;
+  width: 5rem;
+
+  border: 1px solid black;
+  margin-left: 0.05rem;
+  margin-right: 0.05rem;
+  box-sizing: border-box;
 }
 .classrightpage {
-  flex: 1;
+  width: 2.5rem;
   background: tomato;
+  margin-left: 0.05rem;
+  margin-right: 0.05rem;
+  box-sizing: border-box;
 }
 </style>

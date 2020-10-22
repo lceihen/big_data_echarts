@@ -10,6 +10,7 @@
     "dependencies": {
         "bootstrap": "^4.5.3",
         "core-js": "^3.6.5",
+        "echarts": "^4.9.0",
         "jquery": "^3.5.1",
         "lib-flexible": "^0.3.2",
         "postcss-px2rem-exclude": "0.0.6",
@@ -28,7 +29,6 @@
         "root": true,
         "env": {
             "node": true
-
         },
         "extends": [
             "plugin:vue/vue3-essential",
