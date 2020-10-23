@@ -39,6 +39,7 @@
 
 <script>
 import echarts from "echarts";
+// import $ from "jquery";
 var baseinfo = {
   title: "基本信息",
   context:
@@ -205,37 +206,6 @@ export default {
       };
 
       myChart.setOption(option);
-      setTimeout(function () {
-        myChart.on("mouseover", function (params) {
-          console.log(params);
-          if (params.name == ydata[0].name) {
-            myChart.dispatchAction({
-              type: "highlight",
-              seriesIndex: 0,
-              dataIndex: 0,
-            });
-          } else {
-            myChart.dispatchAction({
-              type: "downplay",
-              seriesIndex: 0,
-              dataIndex: 0,
-            });
-          }
-        });
-
-        myChart.on("mouseout", function () {
-          myChart.dispatchAction({
-            type: "highlight",
-            seriesIndex: 0,
-            dataIndex: -1,
-          });
-        });
-        myChart.dispatchAction({
-          type: "highlight",
-          seriesIndex: 0,
-          dataIndex: -1,
-        });
-      }, 1000);
 
       myChart.currentIndex = -1;
 
@@ -523,6 +493,9 @@ export default {
       window.addEventListener("resize", function () {
         myChart.resize();
       });
+      // $(window).resize(function () {
+      //   myChart.resize();
+      // });
     },
   },
   created() {

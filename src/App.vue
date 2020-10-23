@@ -42,16 +42,16 @@ export default {
 .classcenterpage {
   width: 5rem;
 
-  border: 1px solid black;
   margin-left: 0.05rem;
   margin-right: 0.05rem;
   box-sizing: border-box;
 }
 .classrightpage {
   width: 2.5rem;
-  background: tomato;
+  border: 1px solid white;
   margin-left: 0.05rem;
   margin-right: 0.05rem;
   box-sizing: border-box;
+  height: 5rem;
 }
 </style>
