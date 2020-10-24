@@ -48,7 +48,7 @@ export default {
 }
 .classrightpage {
   width: 2.5rem;
-  border: 1px solid white;
+
   margin-left: 0.05rem;
   margin-right: 0.05rem;
   box-sizing: border-box;

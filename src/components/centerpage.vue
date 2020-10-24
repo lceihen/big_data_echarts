@@ -777,6 +777,7 @@ li {
   width: 4.85rem;
   height: 1.7rem;
   display: flex;
+  border: 1px solid #55bcd4;
 }
 .left_div {
   flex: 1;
