@@ -2,20 +2,18 @@
   <div class="comleftpage">
     <div class="topdiv">
       <div class="topdiv_title">
-        <div>{{ topdiv_title }}</div>
+        <div>{{ dataleftinfo.topinfo.title }}</div>
       </div>
       <div class="topdiv_info">
-        <p class="topdiv_info_top">{{ topdiv_info_content }}</p>
+        <p class="topdiv_info_top">{{ dataleftinfo.topinfo.context}}</p>
         <div class="topdiv_info_bottom">
           <ul>
-            <!-- <li v-for="(item, index) in ul_data" :key="index"> -->
-
-            <li>{{ "建筑面积: " + ul_data.buildarea }}</li>
-            <li>{{ "农户总数: " + ul_data.familysum }}</li>
-            <li>{{ "人口总数: " + ul_data.personsum }}</li>
-            <li>{{ "年总产值: " + ul_data.yearvalueone }}</li>
-            <li>{{ "年总产值: " + ul_data.yearvaluetwo }}</li>
-            <li>{{ "年总产值: " + ul_data.yearvaluethr }}</li>
+            <li>{{ "建筑面积: " + dataleftinfo.topinfo.detail.buildarea }}</li>
+            <li>{{ "农户总数: " +dataleftinfo.topinfo.detail.familysum }}</li>
+            <li>{{ "人口总数: " + dataleftinfo.topinfo.detail.personsum }}</li>
+            <li>{{ "年总产值: " + dataleftinfo.topinfo.detail.yearvalueone }}</li>
+            <li>{{ "年总产值: " + dataleftinfo.topinfo.detail.yearvaluetwo }}</li>
+            <li>{{ "年总产值: " +dataleftinfo.topinfo.detail.yearvaluethr }}</li>
           </ul>
         </div>
       </div>
@@ -23,14 +21,14 @@
     <div class="centerdiv">
       <div class="topdiv">
         <div class="topdiv_title">
-          <div>{{ centerdiv_title }}</div>
+          <div>{{ dataleftinfo.centerinfo.title }}</div>
         </div>
         <div ref="centerecharts" class="classcenterecharts"></div>
       </div>
     </div>
     <div class="bottomdiv">
       <div class="topdiv_title">
-        <div>{{ bottomdiv_title }}</div>
+        <div>{{ dataleftinfo.bottominfo.title }}</div>
       </div>
       <div ref="bottomecharts" class="classbottomecharts"></div>
     </div>
@@ -39,41 +37,24 @@
 
 <script>
 import echarts from "echarts";
-// import $ from "jquery";
-var baseinfo = {
-  title: "基本信息",
-  context:
+
+var leftinfo={
+  'topinfo' : {
+  'title': "基本信息",
+  'context':
     "托各地丰富的无公害、应季的果蔬资源、海鲜资源、山地及海域资源以及农村特色人文资源而搭建，集优质资源整合、优化、流通于一体，涵盖有机蔬果产品、特色平价海鲜、农村生态人文旅游",
-  detail: {
-    buildarea: "1168亩",
-    familysum: "867户",
-    personsum: "13万",
-    yearvalueone: "680万",
-    yearvaluetwo: "4651万",
-    yearvaluethr: "4546万",
+  'detail': {
+    'buildarea': "1168亩",
+    'familysum': "867户",
+    'personsum': "13万",
+    'yearvalueone': "680万",
+    'yearvaluetwo': "4651万",
+    'yearvaluethr': "4546万",
+  }
   },
-  // detail: ["1168亩", "867户", "13万", "680万", "4651万", "4546万"],
-};
-export default {
-  data() {
-    return {
-      topdiv_title: "",
-      topdiv_info_content: "",
-      ul_data: "",
-      centerdiv_title: "蔬菜类别",
-      bottomdiv_title: "产量/种植面积",
-    };
-  },
-  methods: {
-    initdata() {
-      this.topdiv_title = baseinfo.title;
-      this.topdiv_info_content = baseinfo.context;
-      this.ul_data = baseinfo.detail;
-    },
-    initcenterecharts() {
-      // this.$refs.centerecharts.text("5645645634");
-      var myChart = echarts.init(this.$refs.centerecharts);
-      var color = [
+'centerinfo':{
+  'title':'蔬菜类别',
+  'color':[
         "#8d7fec",
         "#5085f2",
         "#e75fc3",
@@ -84,8 +65,8 @@ export default {
         "#fdb301",
         "#57e7ec",
         "#cf9ef1",
-      ];
-      var xdata = [
+      ],
+      'xdata': [
         "白菜",
         "西红柿",
         "茄子",
@@ -96,8 +77,8 @@ export default {
         "藕",
         "豌豆",
         "玉米",
-      ];
-      var ydata = [
+      ],
+      'ydata':  [
         {
           name: "白菜",
           value: 18,
@@ -138,16 +119,119 @@ export default {
           name: "玉米",
           value: 3,
         },
-      ];
+      ],
+
+},
+'bottominfo':{
+'title':'产量/种植面积',
+'xdata': [
+              "1月",
+              "2月",
+              "3月",
+              "4月",
+              "5月",
+              "6月",
+              "7月",
+              "8月",
+              "9月",
+              "10月",
+              "11月",
+              "12月",
+            ],
+            'yAxis':{
+              productname:'产量',
+              plantname:'种植面积'
+            },
+            'productbardata':     {'data': [
+              2.0,
+              4.9,
+              7.0,
+              23.2,
+              25.6,
+              76.7,
+              135.6,
+              162.2,
+              32.6,
+              20.0,
+              6.4,
+              3.3,
+            ],
+            name:'产量'
+            } ,
+            plantareabardata: 
+            {
+              'data':[
+              2.6,
+              5.9,
+              9.0,
+              26.4,
+              28.7,
+              70.7,
+              175.6,
+              182.2,
+              48.7,
+              18.8,
+              6.0,
+              2.3,
+            ],
+            name:'种植面积'
+            },
+            toggerincreasinglinedata:{
+'data':
+[
+              2.0,
+              2.2,
+              3.3,
+              4.5,
+              6.3,
+              10.2,
+              20.3,
+              23.4,
+              23.0,
+              16.5,
+              12.0,
+              6.2,
+            ],
+            name:'同比增加'
+
+            },
+            averagelinedata:{
+              'data':    [
+              4.0,
+              3.2,
+              2.3,
+              5.5,
+              4.3,
+              11.2,
+              15.3,
+              22.4,
+              21.0,
+              13.5,
+              12.0,
+              10.2,
+            ],
+            name:'平均增加'
+            }
+}
+};
+export default {
+  data() {
+    return {
+      dataleftinfo:leftinfo,
+    };
+  },
+  methods: {
+    initcenterecharts() {
+      var myChart = echarts.init(this.$refs.centerecharts);
       var option = {
-        color: color,
+        color: this.dataleftinfo.centerinfo.color,
         legend: {
           orient: "vartical",
           x: "left",
           top: "center",
           left: "55%",
           bottom: "0%",
-          data: xdata,
+          data:  this.dataleftinfo.centerinfo.xdata,
           itemWidth: 8,
           itemHeight: 8,
           textStyle: {
@@ -200,15 +284,12 @@ export default {
             labelLine: {
               show: false,
             },
-            data: ydata,
+            data: this.dataleftinfo.centerinfo.ydata,
           },
         ],
       };
-
       myChart.setOption(option);
-
       myChart.currentIndex = -1;
-
       setInterval(function () {
         var dataLen = option.series[0].data.length;
         // 取消之前高亮的图形
@@ -245,7 +326,7 @@ export default {
           containLabel: true,
         },
         legend: {
-          data: ["产量", "种植面积", "同比增加", "平均产量"],
+          // data: ["产量", "种植面积", "同比增加", "平均产量"],
           textStyle: {
             color: "#fff",
           },
@@ -253,20 +334,8 @@ export default {
         xAxis: [
           {
             type: "category",
-            data: [
-              "1月",
-              "2月",
-              "3月",
-              "4月",
-              "5月",
-              "6月",
-              "7月",
-              "8月",
-              "9月",
-              "10月",
-              "11月",
-              "12月",
-            ],
+             data:this.dataleftinfo.bottominfo.xdata,
+    
             axisLabel: {
               show: true,
               textStyle: {
@@ -283,11 +352,11 @@ export default {
         yAxis: [
           {
             type: "value",
-            name: "产量",
+            name: this.dataleftinfo.bottominfo.yAxis.productname,
             axisLabel: {
               formatter: "{value} 顿",
               textStyle: {
-                color: "#2EC7C9", //X轴文字颜色
+                color: "#2EC7C9", //y轴文字颜色
               },
             },
             axisLine: {
@@ -298,18 +367,18 @@ export default {
           },
           {
             type: "value",
-            name: "种植面积",
+            name:this.dataleftinfo.bottominfo.yAxis.plantname,
             axisLabel: {
               formatter: "{value} 亩",
               textStyle: {
-                color: "#2EC7C9", //X轴文字颜色
+                color: "#2EC7C9", //y轴文字颜色
               },
             },
           },
         ],
         series: [
           {
-            name: "产量",
+            name: this.dataleftinfo.bottominfo.productbardata.name,
             type: "bar",
             itemStyle: {
               normal: {
@@ -326,23 +395,11 @@ export default {
                 ]),
               },
             },
-            data: [
-              2.0,
-              4.9,
-              7.0,
-              23.2,
-              25.6,
-              76.7,
-              135.6,
-              162.2,
-              32.6,
-              20.0,
-              6.4,
-              3.3,
-            ],
+            data:this.dataleftinfo.bottominfo.productbardata.data 
+       
           },
           {
-            name: "种植面积",
+            name: this.dataleftinfo.bottominfo.plantareabardata.name,
             type: "bar",
             itemStyle: {
               normal: {
@@ -359,39 +416,15 @@ export default {
                 ]),
               },
             },
-            data: [
-              2.6,
-              5.9,
-              9.0,
-              26.4,
-              28.7,
-              70.7,
-              175.6,
-              182.2,
-              48.7,
-              18.8,
-              6.0,
-              2.3,
-            ],
+            data:this.dataleftinfo.bottominfo.plantareabardata.data
+
           },
           {
-            name: "同比增加",
+            name: this.dataleftinfo.bottominfo.toggerincreasinglinedata.name,
             type: "line",
             yAxisIndex: 1,
-            data: [
-              2.0,
-              2.2,
-              3.3,
-              4.5,
-              6.3,
-              10.2,
-              20.3,
-              23.4,
-              23.0,
-              16.5,
-              12.0,
-              6.2,
-            ],
+            data:this.dataleftinfo.bottominfo.toggerincreasinglinedata.data, 
+
             lineStyle: {
               normal: {
                 width: 5,
@@ -431,23 +464,11 @@ export default {
             smooth: true,
           },
           {
-            name: "平均产量",
+            name: this.dataleftinfo.bottominfo.averagelinedata.name,
             type: "line",
             yAxisIndex: 1,
-            data: [
-              4.0,
-              3.2,
-              2.3,
-              5.5,
-              4.3,
-              11.2,
-              15.3,
-              22.4,
-              21.0,
-              13.5,
-              12.0,
-              10.2,
-            ],
+            data:this.dataleftinfo.bottominfo.averagelinedata.data,
+      
             lineStyle: {
               normal: {
                 width: 5,
@@ -493,14 +514,10 @@ export default {
       window.addEventListener("resize", function () {
         myChart.resize();
       });
-      // $(window).resize(function () {
-      //   myChart.resize();
-      // });
+
     },
   },
-  created() {
-    this.initdata();
-  },
+  
   mounted() {
     this.initcenterecharts();
     this.initbottomecharts();
@@ -574,7 +591,6 @@ export default {
   font-size: 0.09rem;
   list-style: none;
   margin-top: 0.02rem;
-  /* align-content: space-around; */
 }
 .classcenterecharts {
   width: 100%;

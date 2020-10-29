@@ -6,20 +6,20 @@
           :class="['left_title', flag ? 'titleclass' : '']"
           @click="this.flag = true"
         >
-          {{ lefttitleinfo }}
+          {{ datainfo.topinfo.shopinfo }}
         </div>
         <div
           :class="['right_title', flag ? '' : 'titleclass']"
           @click="this.flag = false"
         >
-          {{ righttitleinfo }}
+          {{ datainfo.topinfo.baseplaceinfo }}
         </div>
       </div>
       <div class="leftdiv" v-show="flag">
         <div :class="'thrdiv'">
           <div
             :class="'sonthrdiv'"
-            v-for="(item, index) in datazuoshou"
+            v-for="(item, index) in datainfo.topinfo.zuoshou"
             :key="index"
           >
             <p>{{ item.name }}</p>
@@ -31,7 +31,7 @@
         <div class="firdiv">
           <div
             :class="'sonfirdiv'"
-            v-for="(item, index) in datashangpu"
+            v-for="(item, index) in datainfo.topinfo.shangpu"
             :key="index"
           >
             <p>{{ item.name }}</p>
@@ -41,7 +41,7 @@
       </div>
       <div class="rightdiv" v-show="!flag">
         <ul>
-          <li v-for="(item, index) in databaseplace" :key="index">
+          <li v-for="(item, index) in datainfo.topinfo.baseplace" :key="index">
             {{ item.name + " : " }}
             <span>{{ item.sum }}</span>
             个
@@ -51,16 +51,16 @@
     </div>
     <div class="centerdiv">
       <div class="topdiv_title">
-        <div>销量排行</div>
+        <div>{{datainfo.saleranking.title}}</div>
       </div>
       <div class="thrtitle">
-        <span>名称</span>
-        <span>同比</span>
-        <span>销量</span>
+        <span>{{datainfo.saleranking.place}}</span>
+        <span>{{datainfo.saleranking.compared}}</span>
+        <span>{{datainfo.saleranking.salevolume}}</span>
       </div>
       <div ref="fontscrolldiv" id="FontScroll">
         <ul :class="'fontscrollul'">
-          <li v-for="(item, index) in databaseplace" :key="index">
+          <li v-for="(item, index) in datainfo.saleranking.baseplace" :key="index">
             <span>{{ item.name }}</span> <span>{{ item.sum }}</span>
             <span>{{ item.sale }}</span>
           </li>
@@ -69,7 +69,7 @@
     </div>
     <div class="bottomdiv">
       <div class="topdiv_title">
-        <div>蔬菜成交价</div>
+        <div>{{datainfo.wholesale.vegetablesprice.title}}</div>
       </div>
       <div class="totalecharts">
         <div ref="total_firstdiv"></div>
@@ -85,6 +85,60 @@
 import $ from "jquery";
 import "./fontscroll";
 import echarts from "echarts";
+var info={
+  'topinfo' : {
+    'shopinfo':'商铺信息',
+    'baseplaceinfo':'基地信息',
+  zuoshou: [
+    { name: "座收租金", sum: "10万" },
+    { name: "座收租金", sum: "10万" },
+    { name: "座收租金", sum: "10万" },
+  ],
+  shangpu: [
+    { name: "商铺", sum: "20万" },
+    { name: "商铺", sum: "30万" },
+    { name: "商铺", sum: "40万" },
+    { name: "商铺", sum: "50万" },
+    { name: "商铺", sum: "60万" },
+    { name: "商铺", sum: "70万" },
+  ],
+    baseplace: [
+    { name: "大棚", sum: "560", sale: "10" },
+    { name: "供应企业", sum: "36", sale: "10" },
+    { name: "经销商", sum: "540", sale: "10" },
+    { name: "供应链", sum: "15", sale: "10" },
+    { name: "蔬菜加工基地", sum: "20", sale: "10" },
+    { name: "售后卸载", sum: "29", sale: "10" },
+    { name: "冷藏基地", sum: "10", sale: "10" },
+    { name: "冷藏车", sum: "120", sale: "10" },
+  ],
+  },
+
+
+
+'saleranking':{
+  'title':'销售排行',
+  'place':'名称',
+  'salevolume':'销量',
+  'compared':'同比',
+  baseplace: [
+    { name: "大棚", sum: "560", sale: "10" },
+    { name: "供应企业", sum: "36", sale: "10" },
+    { name: "经销商", sum: "540", sale: "10" },
+    { name: "供应链", sum: "15", sale: "10" },
+    { name: "蔬菜加工基地", sum: "20", sale: "10" },
+    { name: "售后卸载", sum: "29", sale: "10" },
+    { name: "冷藏基地", sum: "10", sale: "10" },
+    { name: "冷藏车", sum: "120", sale: "10" },
+  ],
+
+},
+'wholesale':{
+  'vegetablesprice':{  'title':'蔬菜成交价',data:[90,10]},
+'firwholesale':{'title':'批发1',data:[22,78]},
+'secwholesale':{'title':'批发2',data:[46,54]}
+}
+}
 var topinfo = {
   zuoshou: [
     { name: "座收租金", sum: "10万" },
@@ -114,22 +168,19 @@ var topinfo = {
 export default {
   data() {
     return {
-      lefttitleinfo: "商铺信息",
-      righttitleinfo: "基地信息",
-      datazuoshou: "",
-      flag: true,
-      datashangpu: "",
-      databaseplace: "",
+      datainfo:info,
+  flag:true
     };
   },
   methods: {
     inittotal_thrdiv() {
       var myChart = echarts.init(this.$refs.total_thrdiv);
+     
       var option = {
         title: {
-          text: "批发",
-          bottom: 20,
-          left: 49,
+          text:this.datainfo.wholesale.secwholesale.title,
+            bottom: 0,
+          left: 'center',
           textStyle: {
             color: "#dceaf1",
           },
@@ -150,7 +201,7 @@ export default {
             },
             data: [
               {
-                value: 46,
+                value: this.datainfo.wholesale.secwholesale.data[0],
                 label: {
                   fontSize: 30,
                   show: true,
@@ -159,7 +210,7 @@ export default {
                 },
               },
               {
-                value: 54,
+                value: this.datainfo.wholesale.secwholesale.data[1],
                 label: {
                   show: false,
                   position: "center",
@@ -176,12 +227,14 @@ export default {
       });
     },
     inittotal_secdiv() {
+      // var _this=this;
       var myChart = echarts.init(this.$refs.total_secdiv);
       var option = {
         title: {
-          text: "批发",
-          bottom: 20,
-          left: 49,
+          text:   this.datainfo.wholesale.secwholesale.title,
+        //  text:'55',
+            bottom: 0,
+          left: 'center',
           textStyle: {
             color: "#dceaf1",
           },
@@ -202,7 +255,8 @@ export default {
             },
             data: [
               {
-                value: 46,
+                value: this.datainfo.wholesale.secwholesale.data[0],
+                // value:22,
                 label: {
                   fontSize: 30,
                   show: true,
@@ -211,7 +265,9 @@ export default {
                 },
               },
               {
-                value: 54,
+//  value:78,
+
+                value: this.datainfo.wholesale.secwholesale.data[1],
                 label: {
                   show: false,
                   position: "center",
@@ -231,9 +287,9 @@ export default {
       var myChart = echarts.init(this.$refs.total_firstdiv);
       var option = {
         title: {
-          text: "批发",
-          bottom: 20,
-          left: 49,
+          text: this.datainfo.wholesale.vegetablesprice.title,
+          bottom: 0,
+          left: 'center',
           textStyle: {
             color: "#dceaf1",
           },
@@ -254,7 +310,7 @@ export default {
             },
             data: [
               {
-                value: 76,
+                value: this.datainfo.wholesale.vegetablesprice.data[0],
                 label: {
                   fontSize: 30,
                   show: true,
@@ -263,7 +319,7 @@ export default {
                 },
               },
               {
-                value: 24,
+                value:  this.datainfo.wholesale.vegetablesprice.data[1],
                 label: {
                   show: false,
                   position: "center",

@@ -1,17 +1,21 @@
 <template>
   <div class="com_pageheader">
-    <div class="timeinfo">{{ time }}</div>
-    <div class="headerinfo">{{ title }}</div>
+    <div class="timeinfo" v-text="time"></div>
+    <div class="headerinfo">{{ dataheaderinfo.title }}</div>
   </div>
 </template>
 
 <script>
+var headerinfo={
+  'title':"产业大数据展示",
+  
+}
 export default {
   name: "pageheader",
   data() {
     return {
-      title: "产业大数据展示",
-      time: "2020年10月20日 23时16分56秒",
+     dataheaderinfo:headerinfo,
+      time: "",
     };
   },
   created() {
