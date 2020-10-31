@@ -24,9 +24,8 @@ this.$emit('closecommappointpage');
   },
   props:['fatherFlag'],
   watch:{
-    'fatherFlag':function(newval,oldval){
+    'fatherFlag':function(newval){
 this.closeflag=newval;
-console.log('oldval',oldval);
     }
   }
 }

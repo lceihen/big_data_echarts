@@ -23,8 +23,8 @@
             :key="index"
           >
             <p>{{ item.name }}</p>
-            <div>{{ item.sum }}</div>
-            <label>元</label>
+            <div class="costdiv">{{ item.sum }}</div>
+            <div class="divlabel">元</div>
           </div>
         </div>
 
@@ -68,23 +68,24 @@
       </div>
     </div>
     <div class="bottomdiv">
-      <div class="topdiv_title">
+      <!-- <div class="topdiv_title">
         <div>{{datainfo.wholesale.vegetablesprice.title}}</div>
       </div>
       <div class="totalecharts">
         <div ref="total_firstdiv"></div>
         <div ref="total_secdiv"></div>
         <div ref="total_thrdiv"></div>
-      </div>
+      </div> -->
+      <compie :pie-data="datainfo.wholesale"></compie>
     </div>
   </div>
 </template>
 
 <script>
-// import echarts from "echarts";
 import $ from "jquery";
-import "./fontscroll";
+import "../assets/js/fontscroll";
 import echarts from "echarts";
+import compie from '../components/com_pie';
 var info={
   'topinfo' : {
     'shopinfo':'商铺信息',
@@ -134,36 +135,13 @@ var info={
 
 },
 'wholesale':{
-  'vegetablesprice':{  'title':'蔬菜成交价',data:[90,10]},
-'firwholesale':{'title':'批发1',data:[22,78]},
-'secwholesale':{'title':'批发2',data:[46,54]}
+  'flag':'saleprice',
+  'title':'蔬菜成交价',
+  'vegetablesprice':{  'title':'白菜','color':["#4ac7f5", "#edf1f4"],data:[{'name':'蔬菜成交价','value':20},{'name':'second','value':80}]},
+'firwholesale':{'title':'小白菜','color':["#e75fc3", "#57e7ec"],data:[{'name':'批发一','value':22},{'name':'second','value':78}]},
+'secwholesale':{'title':'大白菜','color':["#57e7ec", "#de801c"],data:[{'name':'批发二','value':12},{'name':'second','value':88}]}
 }
 }
-var topinfo = {
-  zuoshou: [
-    { name: "座收租金", sum: "10万" },
-    { name: "座收租金", sum: "10万" },
-    { name: "座收租金", sum: "10万" },
-  ],
-  shangpu: [
-    { name: "商铺", sum: "20万" },
-    { name: "商铺", sum: "30万" },
-    { name: "商铺", sum: "40万" },
-    { name: "商铺", sum: "50万" },
-    { name: "商铺", sum: "60万" },
-    { name: "商铺", sum: "70万" },
-  ],
-  baseplace: [
-    { name: "大棚", sum: "560", sale: "10" },
-    { name: "供应企业", sum: "36", sale: "10" },
-    { name: "经销商", sum: "540", sale: "10" },
-    { name: "供应链", sum: "15", sale: "10" },
-    { name: "蔬菜加工基地", sum: "20", sale: "10" },
-    { name: "售后卸载", sum: "29", sale: "10" },
-    { name: "冷藏基地", sum: "10", sale: "10" },
-    { name: "冷藏车", sum: "120", sale: "10" },
-  ],
-};
 
 export default {
   data() {
@@ -172,6 +150,7 @@ export default {
   flag:true
     };
   },
+    components:{compie},
   methods: {
     inittotal_thrdiv() {
       var myChart = echarts.init(this.$refs.total_thrdiv);
@@ -201,7 +180,7 @@ export default {
             },
             data: [
               {
-                value: this.datainfo.wholesale.secwholesale.data[0],
+                value: this.datainfo.wholesale.secwholesale.data[0].value,
                 label: {
                   fontSize: 30,
                   show: true,
@@ -210,7 +189,7 @@ export default {
                 },
               },
               {
-                value: this.datainfo.wholesale.secwholesale.data[1],
+                value: this.datainfo.wholesale.secwholesale.data[1].value,
                 label: {
                   show: false,
                   position: "center",
@@ -231,7 +210,7 @@ export default {
       var myChart = echarts.init(this.$refs.total_secdiv);
       var option = {
         title: {
-          text:   this.datainfo.wholesale.secwholesale.title,
+          text:   this.datainfo.wholesale.firwholesale.title,
         //  text:'55',
             bottom: 0,
           left: 'center',
@@ -255,7 +234,7 @@ export default {
             },
             data: [
               {
-                value: this.datainfo.wholesale.secwholesale.data[0],
+                value: this.datainfo.wholesale.firwholesale.data[0].value,
                 // value:22,
                 label: {
                   fontSize: 30,
@@ -265,9 +244,7 @@ export default {
                 },
               },
               {
-//  value:78,
-
-                value: this.datainfo.wholesale.secwholesale.data[1],
+                value: this.datainfo.wholesale.firwholesale.data[1].value,
                 label: {
                   show: false,
                   position: "center",
@@ -310,7 +287,7 @@ export default {
             },
             data: [
               {
-                value: this.datainfo.wholesale.vegetablesprice.data[0],
+                value: this.datainfo.wholesale.vegetablesprice.data[0].value,
                 label: {
                   fontSize: 30,
                   show: true,
@@ -319,7 +296,7 @@ export default {
                 },
               },
               {
-                value:  this.datainfo.wholesale.vegetablesprice.data[1],
+                value:  this.datainfo.wholesale.vegetablesprice.data[1].value,
                 label: {
                   show: false,
                   position: "center",
@@ -342,18 +319,18 @@ export default {
       });
     },
     inittopdiv() {
-      this.datazuoshou = topinfo.zuoshou;
-      this.datashangpu = topinfo.shangpu;
-      this.databaseplace = topinfo.baseplace;
+      this.datazuoshou = info.topinfo.zuoshou;
+      this.datashangpu = info.topinfo.shangpu;
+      this.databaseplace = info.topinfo.baseplace;
     },
   },
 
   mounted() {
     this.inittopdiv();
     this.initfontscroll();
-    this.inittotal_firstdiv();
-    this.inittotal_secdiv();
-    this.inittotal_thrdiv();
+    // this.inittotal_firstdiv();
+    // this.inittotal_secdiv();
+    // this.inittotal_thrdiv();
   },
 };
 </script>
@@ -413,15 +390,17 @@ export default {
   font-size: 0.08rem;
   text-align: center;
 }
-.sonthrdiv label {
+.sonthrdiv .divlabel {
   color: white;
+    display: inline-block;
+    width: 30%;
 }
-.sonthrdiv div {
-  width: 0.3rem;
+.sonthrdiv .costdiv {
+  width:70%;
   height: 0.3rem;
-  margin-left: 20%;
+  /* margin-left: 20%; */
   display: inline-block;
-
+text-align: center;
   line-height: 0.25rem;
   font-size: 0.12rem;
   color: rgb(198, 202, 55);

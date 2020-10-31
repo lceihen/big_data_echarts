@@ -19,7 +19,7 @@
           <li
             class="fontdiv"
             v-for="(item, index) in datacenterinfo.map.connected.amount"
-            :key="index"
+            :key="'font_sim' + index"
           >
             {{ item }}
           </li>
@@ -27,28 +27,36 @@
           <li class="font_sim">%</li>
         </ul>
       </div>
-      
-      <div class="map" ref="map_china" ></div>
+
+      <div class="map" ref="map_china"></div>
     </div>
     <div class="bottom_div">
       <div class="left_div" ref="left_div_echarts"></div>
-      <div class="right_div" ref="right_div_echarts"></div>
+      <div class="right_div">
+        <compie :pie-data="datacenterinfo.productanalyse"></compie>
+      </div>
     </div>
-    <div class="mask"  v-show="datacenterinfo.map.pointshow" @click="closecommappointpage()">
-     
-    </div> 
-    <mappointpage ref="commappointpage" :father-flag="datacenterinfo.map.pointshow"  @closecommappointpage="closecommappointpage">
-      <p>{{mappointslot.name}}</p>
-<p>{{mappointslot.selfvalue}}</p>
+    <div
+      class="mask"
+      v-show="datacenterinfo.map.pointshow"
+      @click="closecommappointpage()"
+    ></div>
+    <mappointpage
+      ref="commappointpage"
+      :father-flag="datacenterinfo.map.pointshow"
+      @closecommappointpage="closecommappointpage"
+    >
+      <p>{{ mappointslot.name }}</p>
+      <p>{{ mappointslot.selfvalue }}</p>
     </mappointpage>
-
   </div>
 </template>
 
 <script>
 import echarts from "echarts";
-import mappointpage from './mappointpage';
+import mappointpage from "../components/com_mappoint";
 import "echarts/map/js/china.js";
+import compie from "../components/com_pie";
 var centerinfo = {
   map: {
     plantbaseplace: {
@@ -59,7 +67,7 @@ var centerinfo = {
       title: "已接入",
       amount: "83",
     },
-    pointshow:false,
+    pointshow: false,
     mapdetail: {
       geoCoordMap: {
         海门: [121.15, 31.89],
@@ -260,12 +268,12 @@ var centerinfo = {
         [{ name: "宁波" }, { name: "北京" }],
       ],
       pointname: [
-        {'name':'广州','value':'30'},
-        {'name':'宁波','value':'20'},
-        {'name':'北京','value':'78'},
-        {'name':'呼和浩特','value':'2'}
-        ],
-     temvalue:[{'name':'广州'}]
+        { name: "广州", value: "30" },
+        { name: "宁波", value: "20" },
+        { name: "北京", value: "78" },
+        { name: "呼和浩特", value: "2" },
+      ],
+      temvalue: [{ name: "广州" }],
     },
   },
   saleprecentdata: {
@@ -277,6 +285,7 @@ var centerinfo = {
     },
   },
   productanalyse: {
+    flag: "productanalyse",
     title: "产量分析",
     color: [
       "#00FFFF",
@@ -322,21 +331,17 @@ var centerinfo = {
   },
 };
 export default {
-  
   data() {
     return {
-      mappointslot:"",
+      mappointslot: "",
       datacenterinfo: centerinfo,
     };
   },
-  components:{mappointpage},
+  components: { mappointpage, compie },
   methods: {
-
-closecommappointpage(){
-  
-
-this.datacenterinfo.map.pointshow=false;
-},
+    closecommappointpage() {
+      this.datacenterinfo.map.pointshow = false;
+    },
     echart_map() {
       // 基于准备好的dom，初始化echarts实例
       var myChart = echarts.init(this.$refs.map_china);
@@ -367,37 +372,38 @@ this.datacenterinfo.map.pointshow=false;
         var res = [];
         for (var i = 0; i < data.length; i++) {
           var dataItem = data[i].name;
-var Selfvalue=data[i].value;
+          var Selfvalue = data[i].value;
           var point = _this.datacenterinfo.map.mapdetail.geoCoordMap[dataItem];
-          res.push({ name: dataItem, value: point ,selfvalue:Selfvalue});
+          res.push({ name: dataItem, value: point, selfvalue: Selfvalue });
         }
         return res;
       };
 
       var option = {
-               tooltip: {
-                trigger: 'item',
-                backgroundColor: 'rgba(166, 200, 76, 0.82)',
-                borderColor: '#FFFFCC',
-                showDelay: 0,
-                hideDelay: 0,
-                enterable: true,
-                transitionDuration: 0,
-                extraCssText: 'z-index:20',
-                formatter: function(params) {
-          
-                    // console.log("p",params)
-                if(params.componentSubType=="effectScatter")
-                   {
-                     var res = "";
-                    var name = params.data.name;
-                    var value = params.data.selfvalue;
-                    res = "<span style='color:#fff;'>" + name + "</span><br/>数据：" + value;
-                    return res;
-                   }
-           
-                }
-            },
+        tooltip: {
+          trigger: "item",
+          backgroundColor: "rgba(166, 200, 76, 0.82)",
+          borderColor: "#FFFFCC",
+          showDelay: 0,
+          hideDelay: 0,
+          enterable: true,
+          transitionDuration: 0,
+          extraCssText: "z-index:20",
+          formatter: function (params) {
+            // console.log("p",params)
+            if (params.componentSubType == "effectScatter") {
+              var res = "";
+              var name = params.data.name;
+              var value = params.data.selfvalue;
+              res =
+                "<span style='color:#fff;'>" +
+                name +
+                "</span><br/>数据：" +
+                value;
+              return res;
+            }
+          },
+        },
         geo: {
           map: "china",
           itemStyle: {
@@ -479,18 +485,17 @@ var Selfvalue=data[i].value;
           },
         ],
       };
-myChart.on('click', 'series.effectScatter',function (params) {
-    console.log(params);
-_this.datacenterinfo.map.pointshow=true;
-console.log(_this.datacenterinfo.map.pointshow);
-_this.mappointslot=params.data;
-});
+      myChart.on("click", "series.effectScatter", function (params) {
+        console.log(params);
+        _this.datacenterinfo.map.pointshow = true;
+        console.log(_this.datacenterinfo.map.pointshow);
+        _this.mappointslot = params.data;
+      });
 
       myChart.setOption(option);
       window.addEventListener("resize", function () {
         myChart.resize();
       });
-
     },
 
     initleftcharts() {
@@ -617,176 +622,11 @@ _this.mappointslot=params.data;
         myChart.resize();
       });
     },
-    initrightcharts() {
-      var myChart = echarts.init(this.$refs.right_div_echarts);
-      var option = {
-        /*backgroundColor: '#031845',*/
-        tooltip: {
-          trigger: "item",
-          formatter: "{a} <br/>{b}: {c} ({d}%)",
-        },
-        graphic: {
-          elements: [
-            {
-              type: "image",
-              style: {
-                /*image: giftImageUrl,*/
-                width: 50,
-                height: 50,
-              },
-              left: "center",
-              top: "center",
-            },
-          ],
-        },
-        title: {
-          text: this.datacenterinfo.productanalyse.title,
-          left: "center",
-          top: "10%",
-          padding: [24, 0],
-          textStyle: {
-            color: "#fff",
-            fontSize: 18,
-            align: "center",
-          },
-        },
-        legend: {
-          // top: 0,
-          orient: "horizontal",
-          icon: "circle",
-          bottom: 0,
-          x: "center",
-
-          textStyle: {
-            color: "#fff",
-          },
-        },
-        series: [
-          {
-            // top: 0,
-            // left: 0,
-            name: "产量",
-            type: "pie",
-            radius: ["25%", "35%"],
-            color: this.datacenterinfo.productanalyse.color,
-            // [
-            //   "#00FFFF",
-            //   "#44EAB1",
-            //   "#7BDD43",
-            //   "#FEBE12",
-            //   "#EBEC2F",
-            //   "#FF7C44",
-            //   "#FA3E5F",
-            //   "#6635EF",
-            //   "#FFAFDA",
-            // ],
-            labelLine: {
-              normal: {
-                show: true,
-                length: 10,
-                length2: 10,
-                lineStyle: {
-                  width: 1,
-                },
-              },
-            },
-            label: {
-              normal: {
-                formatter: "{c|{c}}\n{hr|}\n{d|{d}%--}",
-                rich: {
-                  b: {
-                    fontSize: 12,
-                    color: "#12EABE",
-                    align: "left",
-                    padding: 4,
-                  },
-                  hr: {
-                    borderColor: "#12EABE",
-                    width: "80%",
-                    borderWidth: 2,
-                    height: 0,
-                  },
-                  d: {
-                    fontSize: 12,
-                    color: "#fff",
-                    align: "left",
-                    padding: 4,
-                  },
-                  c: {
-                    fontSize: 12,
-                    color: "#fff",
-                    align: "left",
-                    padding: 4,
-                  },
-                },
-              },
-            },
-            data: this.datacenterinfo.productanalyse.data,
-            // data: [
-            //   {
-            //     value: 100,
-            //     name: "一号大棚",
-            //   },
-            //   {
-            //     value: 100,
-            //     name: "二号大棚",
-            //   },
-            //   {
-            //     value: 100,
-            //     name: "三号大棚",
-            //   },
-            //   {
-            //     value: 100,
-            //     name: "四号大棚",
-            //   },
-            //   {
-            //     value: 100,
-            //     name: "五号大棚",
-            //   },
-            //   {
-            //     value: 100,
-            //     name: "六号大棚",
-            //   },
-            //   {
-            //     value: 100,
-            //     name: "七号大棚",
-            //   },
-            // ],
-          },
-        ],
-      };
-
-      myChart.setOption(option);
-      myChart.currentindex = -1;
-
-      setInterval(() => {
-        var dataLen = option.series[0].data.length;
-        // 取消之前高亮的图形
-        myChart.dispatchAction({
-          type: "downplay",
-          seriesIndex: 0,
-          dataIndex: myChart.currentIndex,
-        });
-        myChart.currentIndex = (myChart.currentIndex + 1) % dataLen;
-        // 高亮当前图形
-        myChart.dispatchAction({
-          type: "highlight",
-          seriesIndex: 0,
-          dataIndex: myChart.currentIndex,
-        });
-      }, 1000);
-
-      window.addEventListener("resize", function () {
-        myChart.resize();
-      });
-    },
   },
 
   mounted() {
     this.echart_map();
     this.initleftcharts();
-    this.initrightcharts();
-    // this.initfunction();
   },
 };
 </script>
@@ -850,26 +690,27 @@ li {
   border: 1px solid #55bcd4;
 }
 .left_div {
+  width: 50%;
   flex: 1;
   height: 100%;
 }
 .right_div {
+  width: 50%;
   flex: 1;
   height: 100%;
 }
 .mask {
-	width:100%;
-	height:100%;
-	background:gray;
-position: fixed;
-	top:0;
-	left:0;
-	z-index:100;
-	opacity:0.6;
-	/* display:none; */
-	
+  width: 100%;
+  height: 100%;
+  background: gray;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  opacity: 0.6;
+  /* display:none; */
 }
-.mappointpage{
-    z-index:10100;
+.mappointpage {
+  z-index: 10100;
 }
 </style>

@@ -10,10 +10,10 @@
 </template>
 
 <script>
-import pageheader from "./components/pageheader";
-import leftpage from "./components/leftpage";
-import centerpage from "./components/centerpage";
-import rightpage from "./components/rightpage";
+import pageheader from "./page/pageheader";
+import leftpage from "./page/leftpage";
+import centerpage from "./page/centerpage";
+import rightpage from "./page/rightpage";
 export default {
   name: "App",
   components: { pageheader, leftpage, centerpage, rightpage },
@@ -29,8 +29,6 @@ export default {
 #page_body {
   width: 100%;
   display: flex;
-  /* height: 7.5rem; */
-
   flex: 1;
 }
 .classleftpage {
@@ -52,6 +50,6 @@ export default {
   margin-left: 0.05rem;
   margin-right: 0.05rem;
   box-sizing: border-box;
-  height: 5rem;
+  /* height: 5rem; */
 }
 </style>
