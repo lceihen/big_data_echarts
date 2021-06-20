@@ -9,8 +9,9 @@ remote=$(git config remote.origin.url)
 echo 'remote is: '$remote
 
 mkdir gh-pages-branch
+mkdir dist
 cd gh-pages-branch
-
+mkdir dist
 git config --global user.email "$GH_EMAIL" >/dev/null 2>&1
 git config --global user.name "$GH_NAME" >/dev/null 2>&1
 git init
