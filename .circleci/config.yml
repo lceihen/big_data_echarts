@@ -5,12 +5,11 @@ jobs:
       - image: circleci/node:10
     branches:
       only:
-        - master
+        - "master"
     steps:
       - add_ssh_keys:
           fingerprints:
-            -
-            "6e:31:47:2a:12:94:10:b4:dc:28:21:bf:b1:92:d2:36"
+            - "b7:35:a6:4e:9b:0d:6d:d4:78:1e:9a:97:2a:66:6b:be"
       - checkout
       - restore_cache:
           keys:
