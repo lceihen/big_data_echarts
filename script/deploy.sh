@@ -18,7 +18,7 @@ git remote add --fetch origin "$remote"
 
 echo 'email is:'$GH_EMAIL
 echo 'name is:'$GH_NAME
-echo 'sitesource is:'$sitesource
+echo 'sitesource is:'$siteSource
 
 if git rev-parse --verify origin/gh-pages >/
 dev/null 2>&1; then
