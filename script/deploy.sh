@@ -28,7 +28,7 @@ else
   git checkout --orphan gh-pages
 fi
 
-cp -a "../${sitesource}/." .
+cp -a "../${siteSource}/." .
 ls -la
 
 git add -A 
