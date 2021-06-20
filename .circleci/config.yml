@@ -11,7 +11,6 @@ jobs:
           fingerprints:
             -
             "6e:31:47:2a:12:94:10:b4:dc:28:21:bf:b1:92:d2:36"
-      - checkout
       - restore_cache:
           keys:
             - imooc
