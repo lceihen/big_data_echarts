@@ -4,6 +4,13 @@ jobs:
     docker:
       - image: circleci/node:10
     steps:
+      - add_ssh_keys:
+          fingerprints:
+            -
       - checkout
-      - run: echo "A first hello"
-      - run: npm -v
+      - run:
+          name: Install
+          command: npm Install
+      - run:
+          name: build
+          command: npm build
