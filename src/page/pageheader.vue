@@ -6,51 +6,49 @@
 </template>
 
 <script>
-var headerinfo={
-  'title':"产业大数据展示",
-  
+var headerinfo = {
+  title: '产业大数据展示11'
 }
 export default {
-  name: "pageheader",
+  name: 'pageheader',
   data() {
     return {
-     dataheaderinfo:headerinfo,
-      time: "",
-    };
+      dataheaderinfo: headerinfo,
+      time: ''
+    }
   },
   created() {
-    this.getTime();
+    this.getTime()
   },
   methods: {
     getTime() {
       setInterval(() => {
-        let dt = new Date();
-        let y = dt.getFullYear();
-        let mt = dt.getMonth() + 1;
-        let day = dt.getDate();
-        let h = dt.getHours(); //获取时
-        let m = dt.getMinutes(); //获取分
-        let s = dt.getSeconds(); //获取秒
+        let dt = new Date()
+        let y = dt.getFullYear()
+        let mt = dt.getMonth() + 1
+        let day = dt.getDate()
+        let h = dt.getHours() //获取时
+        let m = dt.getMinutes() //获取分
+        let s = dt.getSeconds() //获取秒
         this.time =
           y +
-          "年" +
-          mt.toString().padStart(2, "0") +
-          "月" +
-          day.toString().padStart(2, "0") +
-          "日  " +
-          h.toString().padStart(2, "0") +
-          "时" +
-          m.toString().padStart(2, "0") +
-          "分" +
-          s.toString().padStart(2, "0") +
-          "秒";
-      }, 1000);
+          '年' +
+          mt.toString().padStart(2, '0') +
+          '月' +
+          day.toString().padStart(2, '0') +
+          '日  ' +
+          h.toString().padStart(2, '0') +
+          '时' +
+          m.toString().padStart(2, '0') +
+          '分' +
+          s.toString().padStart(2, '0') +
+          '秒'
+      }, 1000)
       //   this.time = "2020-10-20 15:35:03 星期三";
-    },
-  },
-};
+    }
+  }
+}
 </script>
-
 
 <style scoped>
 .com_pageheader {
