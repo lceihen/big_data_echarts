@@ -20,8 +20,7 @@ echo 'email is:'$GH_EMAIL
 echo 'name is:'$GH_NAME
 echo 'sitesource is:'$siteSource
 
-if git rev-parse --verify origin/gh-pages >/
-dev/null 2>&1; then
+if git rev-parse --verify origin/gh-pages >/dev/null 2>&1; then
   git checkout gh-pages
   git rm -rf .
 else
