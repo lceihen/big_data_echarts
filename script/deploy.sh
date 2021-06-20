@@ -27,7 +27,7 @@ dev/null 2>&1; then
 else
   git checkout --orphan gh-pages
 fi
-
+echo 'print siteSource is: ../${siteSource}/.'
 cp -a "../${siteSource}/." .
 ls -la
 
