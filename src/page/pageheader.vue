@@ -7,7 +7,7 @@
 
 <script>
 var headerinfo = {
-  title: '产业大数据展示11'
+  title: '产业大数据展示119'
 }
 export default {
   name: 'pageheader',
