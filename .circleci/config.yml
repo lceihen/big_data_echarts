@@ -10,7 +10,7 @@ jobs:
       - checkout
       - run:
           name: Install
-          command: npm Install
+          command: npm install
       - run:
           name: build
           command: npm build
