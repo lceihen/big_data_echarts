@@ -8,9 +8,23 @@ jobs:
           fingerprints:
             -
       - checkout
+      - restore_cache:
+          keys:
+            - imooc
       - run:
           name: Install
           command: npm install
+      - save_cache:
+          paths:
+            - node_modules
+          key: imooc
       - run:
           name: build
           command: npm build
+      - run:
+          name: prepare shell commands
+          # shell chmod +x
+          command: chmod +x script/deploy.sh
+      - run:
+          name: run deploy
+          command: ./script/deploy.sh
