@@ -4,14 +4,17 @@ jobs:
     docker:
       - image: circleci/node:10
     steps:
-      - add_ssh_keys:
-          fingerprints:
-            -
-            "6e:31:47:2a:12:94:10:b4:dc:28:21:bf:b1:92:d2:36"
       - checkout
+      - restore_cache:
+          keys:
+            - imooc
       - run:
           name: Install
           command: npm install
+      - save_cache:
+          paths:
+            - node_modules
+          key: imooc
       - run:
           name: build
           command: npm build
